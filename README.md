@@ -94,7 +94,16 @@ Orbit adheres to a minimal, high-density developer aesthetic:
 
 ## Quick Start
 
-### Option 1: Docker Compose (Recommended)
+### Option 1: 1-Click Deploy to Render (Cloud Hosting)
+
+Deploy both the backend API service and frontend SPA to Render with a single click using the included [`render.yaml`](render.yaml) Blueprint:
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/nyxrv0id/orbit)
+
+- **Backend Web Service (`orbit-api`)**: Deploys FastAPI on Python 3.12 with `/api/health` monitoring.
+- **Frontend Static Site (`orbit-app`)**: Builds the React SPA and automatically wires `VITE_API_BASE_URL` to the backend service.
+
+### Option 2: Docker Compose (Local Containerized)
 
 Run the full stack with a single command:
 
@@ -110,7 +119,7 @@ docker compose up --build
 - Frontend: [http://localhost:3000](http://localhost:3000)
 - Backend API Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 
-### Option 2: Local Development
+### Option 3: Local Development
 
 #### Prerequisites
 - Python 3.11+

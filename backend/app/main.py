@@ -41,10 +41,12 @@ def create_app() -> FastAPI:
     )
 
     # CORS configuration
+    has_wildcard = "*" in settings.cors_origins_list
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.cors_origins_list,
-        allow_credentials=True,
+        allow_origin_regex=r"https://.*\.onrender\.com",
+        allow_credentials=not has_wildcard,
         allow_methods=["*"],
         allow_headers=["*"],
     )

@@ -7,7 +7,10 @@ import {
   LanguageShare,
 } from '../types/github';
 
-const API_BASE = '/api';
+const RAW_API_BASE = (import.meta.env.VITE_API_BASE_URL || '/api').trim().replace(/\/+$/, '');
+const API_BASE = RAW_API_BASE.startsWith('http')
+  ? (RAW_API_BASE.endsWith('/api') ? RAW_API_BASE : `${RAW_API_BASE}/api`)
+  : RAW_API_BASE;
 
 export class ApiError extends Error {
   status: number;
