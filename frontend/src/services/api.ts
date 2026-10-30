@@ -7,10 +7,20 @@ import {
   LanguageShare,
 } from '../types/github';
 
-const RAW_API_BASE = (import.meta.env.VITE_API_BASE_URL || '/api').trim().replace(/\/+$/, '');
-const API_BASE = RAW_API_BASE.startsWith('http')
-  ? (RAW_API_BASE.endsWith('/api') ? RAW_API_BASE : `${RAW_API_BASE}/api`)
-  : RAW_API_BASE;
+export function resolveApiBase(raw: string | undefined): string {
+  const trimmed = (raw || '/api').trim().replace(/\/+$/, '');
+  if (!trimmed || trimmed === '/api') return '/api';
+  if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
+    return trimmed.endsWith('/api') ? trimmed : `${trimmed}/api`;
+  }
+  if (trimmed.startsWith('/')) {
+    return trimmed;
+  }
+  const host = trimmed.includes('.') ? trimmed : `${trimmed}.onrender.com`;
+  return `https://${host}/api`;
+}
+
+const API_BASE = resolveApiBase(import.meta.env.VITE_API_BASE_URL);
 
 export class ApiError extends Error {
   status: number;
